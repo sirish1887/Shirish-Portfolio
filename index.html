@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shirish Jha | Web Designer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family:'Outfit',sans-serif;
+  color:#e5e7eb;
+  background:linear-gradient(-45deg,#0f0c29,#1b1536,#2d1b69,#0f172a);
+  background-size:400% 400%;
+  animation:gradientMove 15s ease infinite;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* LED Gradient Background Animation */
+@keyframes gradientMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* LOADER */
+#loader{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  /* subtle glow only */
+  text-shadow:0 0 5px #ff3c3c,0 0 5px #4f7cff,0 0 5px #ffe600;
+}
+
+/* CUSTOM CURSOR */
+.custom-cursor{
+  position:fixed;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#ec4899;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 15px #ec4899,0 0 30px #ec4899,0 0 50px #ff77aa;
+  transition: transform 0.1s ease;
+}
+
+/* GLASS */
+.glass{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:1rem;
+  box-shadow: 0 0 20px rgba(255,255,255,0.1), 0 0 40px rgba(236,72,153,0.2);
+}
+
+/* 3D CARD */
+.card{
+  perspective:1200px;
+  transition:.4s;
+}
+.card-inner{
+  transition:transform .4s;
+  transform-style:preserve-3d;
+}
+
+/* PROFILE FLOAT */
+.profile3d{
+  animation:float3d 5s ease-in-out infinite;
+}
+@keyframes float3d{
+  0%{transform:translateY(0px)}
+  50%{transform:translateY(-15px)}
+  100%{transform:translateY(0px)}
+}
+
+/* GRADIENT TEXT - toned down glow */
+.gradient-text{
+  background:linear-gradient(90deg,#ff3c3c,#4f7cff,#ffe600,#ff3c3c);
+  background-size:300%;
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:textMove 6s linear infinite;
+  text-shadow: 0 0 2px rgba(255,255,255,0.2); /* very subtle shadow */
+}
+@keyframes textMove{
+  0%{background-position:0%}
+  100%{background-position:300%}
+}
+
+/* BUTTON LED - subtle shadow */
+.btn{
+  background:linear-gradient(90deg,#a855f7,#ec4899);
+  transition:.3s;
+  box-shadow:0 0 5px #a855f7,0 0 10px #ec4899,0 0 15px #ff77aa;
+}
+.btn:hover{
+  transform:translateY(-5px) scale(1.05);
+  box-shadow:0 0 8px #a855f7,0 0 15px #ec4899,0 0 25px #ff77aa;
+}
+
+/* SECTION ANIMATION */
+.fade{
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s;
+}
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.cursor{
+  border-right:2px solid #ff2d95;
+  animation:blink 1s infinite;
+}
+@keyframes blink{
+  50%{border-color:transparent}
+}
+
+/* TOP BUTTON LED */
+#topBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  display:none;
+  z-index:50;
+  box-shadow:0 0 5px #ec4899,0 0 10px #ff3c3c,0 0 15px #ff77aa;
+}
+
+/* PARTICLE CANVAS */
+#heroParticles{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-10;
+}
+
+/* LED SKILL BARS */
+.skill-bar {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+.skill-fill {
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 2s infinite alternate;
+}
+.skill-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, #9d3cff, #4f7cff, #ffe600);
+  filter: blur(6px);
+  opacity: 0.5; /* reduced opacity */
+  animation: scan 2s linear infinite;
+}
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 5px, 0 0 10px; }
+  50% { box-shadow: 0 0 8px, 0 0 15px; }
+  100% { box-shadow: 0 0 5px, 0 0 10px; }
+}
+@keyframes scan {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
+
+/* Contact Card 3D Floating & Neon Glow */
+#contact .card {
+  perspective: 1200px;
+  position: relative;
+  border-radius: 2rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 15px rgba(236,72,153,0.2), 0 0 30px rgba(255,119,170,0.2);
+  overflow: hidden;
+  animation: floatCard 6s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Inner card for 3D effect */
+#contact .card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+/* Neon gradient border */
+#contact .card::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border-radius: 2rem;
+  background: linear-gradient(90deg, #ff3c3c, #4f7cff);
+  z-index: -1;
+  filter: blur(15px);
+  opacity: 0.6;
+  animation: neonPulse 2.5s ease-in-out infinite alternate;
+}
+
+/* Floating keyframes */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Neon pulse keyframes */
+@keyframes neonPulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.4; }
+}
+
+/* Optional subtle hover scale */
+#contact .card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(236,72,153,0.3), 0 0 40px rgba(255,119,170,0.3);
+}
+
+/* Background image styling */
+#contact .absolute img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.3; /* darken image */
+  filter: blur(2px); /* slight blur */
+  z-index: 0;
+}
+
+/* Ensure card is above the background */
+#contact .card {
+  position: relative;
+  z-index: 10;
+}
+
+/* Modal hidden by default */
+#whatsappModal {
+  display: none;
+}
+
+/* Show modal when active */
+#whatsappModal.show {
+  display: flex;
+}
+
+/* Hero WhatsApp Modal hidden by default */
+#heroWhatsappModal {
+  display: none;
+}
+
+/* Show modal when active */
+#heroWhatsappModal.show {
+  display: flex;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <h1 class="text-3xl gradient-text">Loading Portfolio...</h1>
+</div>
+
+<div class="custom-cursor" id="cursor"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed w-full bg-black/30 backdrop-blur-md border-b border-white/10 z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold gradient-text">Sirish Portfolio</h1>
+    <div class="space-x-8 hidden md:flex">
+      <a href="#about" class="text-white hover:text-pink-400 transition duration-300">About</a>
+      <a href="#skills" class="text-white hover:text-pink-400 transition duration-300">Skills</a>
+      <a href="#projects" class="text-white hover:text-pink-400 transition duration-300">Projects</a>
+      <a href="#contact" class="text-white hover:text-pink-400 transition duration-300">Contact</a>
+    </div>
+    <button id="menuBtn" class="md:hidden text-2xl text-white"><i class="fas fa-bars"></i></button>
+  </div>
+  <div id="mobileMenu" class="hidden flex flex-col text-center pb-4 space-y-3 md:hidden">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="h-screen flex items-center justify-center text-center px-6 relative fade">
+  <canvas id="heroParticles"></canvas>
+  <div>
+    <img src="image1.jpeg" class="profile3d w-36 h-36 mx-auto rounded-full border-4 border-pink-500 mb-6">
+    <h2 class="text-5xl font-bold gradient-text mb-4">Hi, I'm Shirish Jha</h2>
+    <p class="text-xl text-pink-400 mb-6"><span id="typing" class="cursor"></span></p>
+    <p class="text-gray-400 max-w-xl mx-auto mb-8">
+      Creative Web Designer from Kathmandu building modern, responsive and aesthetic websites.
+    </p>
+    <div class="flex justify-center gap-6 text-xl mb-8">
+      <a href="https://github.com/sirish1887" class="hover:text-yellow-400 transition duration-300"><i class="fab fa-github"></i></a>
+      <button id="heroWhatsappBtn" class="hover:text-green-400 transition duration-300"><i class="fab fa-whatsapp"></i></button>
+      <a href="https://www.instagram.com/shirish_jha1" class="hover:text-pink-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+    </div>
+    <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn px-8 py-3 rounded-full">View My Work</a>
+  </div>
+
+  <!-- WhatsApp QR Code Modal for Hero -->
+  <div id="heroWhatsappModal" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 hidden">
+    <div class="bg-black/80 p-6 rounded-2xl flex flex-col items-center relative">
+      <button id="closeHeroModal" class="absolute top-2 right-2 text-white text-xl">&times;</button>
+      <h3 class="text-white text-2xl mb-4">Scan WhatsApp QR</h3>
+      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48">
+      <p class="text-gray-300 mt-4 text-sm">Scan this QR code with WhatsApp to chat with me.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 fade flex justify-center">
+  <div class="glass max-w-4xl p-10 rounded-3xl text-center space-y-6">
+    <h2 class="text-4xl font-bold gradient-text mb-6">About Me</h2>
+    <p class="text-gray-300 text-lg">
+      I'm <span class="text-pink-400 font-semibold">Shirish Jha</span>, a freelance web designer and frontend developer based in Kathmandu, Nepal.
+      I specialize in modern UI design, responsive websites, and creating visually stunning digital experiences.
+    </p>
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+      <div class="space-y-2">
+        <i class="fas fa-laptop-code text-3xl text-pink-500" style="text-shadow:0 0 10px #ff3c3c,0 0 20px #ff77aa;"></i>
+        <h3 class="font-semibold text-white">Frontend Development</h3>
+        <p class="text-gray-400 text-sm">HTML, CSS, JavaScript & Tailwind CSS</p>
+      </div>
+      <div class="space-y-2">
+        <i class="fab fa-python text-3xl text-yellow-400" style="text-shadow:0 0 10px #ffe600,0 0 20px #ffdd55;"></i>
+        <h3 class="font-semibold text-white">Python</h3>
+        <p class="text-gray-400 text-sm">Backend, automation, scripting</p>
+      </div>
+      <div class="space-y-2">
+        <i class="fas fa-rocket text-3xl text-purple-500" style="text-shadow:0 0 10px #a855f7,0 0 20px #ec4899;"></i>
+        <h3 class="font-semibold text-white">Fast & Responsive</h3>
+        <p class="text-gray-400 text-sm">Optimized performance for all devices</p>
+      </div>
+    </div>
+    <a href="#projects" class="btn px-8 py-3 rounded-full mt-6 inline-block">Work With Me</a>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="py-24 bg-black/30 fade">
+  <h2 class="text-4xl font-bold text-center gradient-text mb-14">Skills</h2>
+  <div class="max-w-4xl mx-auto space-y-6">
+    <div>
+      <p>HTML</p>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%; background:#ff3c3c;"></div></div>
+    </div>
+    <div>
+      <p>Tailwind CSS</p>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%; background:#a855f7;"></div></div>
+    </div>
+    <div>
+      <p>JavaScript</p>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%; background:#4f7cff;"></div></div>
+    </div>
+    <div>
+      <p>Python</p>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%; background:#ffe600;"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="py-24 fade">
+  <h2 class="text-4xl font-bold text-center gradient-text mb-14">Projects</h2>
+  <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+    <div class="glass rounded-2xl card overflow-hidden group">
+      <div class="card-inner p-6">
+        <img src="image2.png" class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl mb-2">Business Website</h3>
+        <p class="text-gray-400 text-sm mb-4">Modern responsive website for a startup company.</p>
+        <div class="flex justify-between">
+          <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
+          <a href="https://github.com/sirish1887/Sajilo-Luga-" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass rounded-2xl card overflow-hidden group">
+      <div class="card-inner p-6">
+        <img src="image4.png" class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl mb-2">Portfolio Website</h3>
+        <p class="text-gray-400 text-sm mb-4">Personal portfolio with animations and modern UI.</p>
+        <div class="flex justify-between">
+          <a href="#" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
+          <a href="#" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass rounded-2xl card overflow-hidden group">
+      <div class="card-inner p-6">
+        <img src="image3.png" class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-xl mb-2">Landing Page</h3>
+        <p class="text-gray-400 text-sm mb-4">High-converting landing page for SaaS business.</p>
+        <div class="flex justify-between">
+          <a href="https://sirish1887.github.io/SJgames/" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
+          <a href="https://github.com/sirish1887/SJgames" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="contact" class="py-24 bg-black/20 flex justify-center items-center fade relative">
+  <!-- Background image -->
+  <div class="absolute inset-0">
+    <img src="image5.webp" alt="Contact Background" class="w-full h-full object-cover opacity-30">
+  </div>
+
+  <!-- Contact Card -->
+  <div class="card glass p-10 rounded-3xl max-w-md text-center transform transition-transform duration-400 relative z-10">
+    <div class="card-inner">
+      <h2 class="text-4xl font-bold gradient-text mb-6">Contact Me</h2>
+      <p class="text-gray-300 mb-6">Let's work together on your next project. Reach out via email or social links below!</p>
+      <a href="mailto:your@email.com" class="btn px-8 py-3 rounded-full mb-4 inline-block">Send Email</a>
+      <div class="flex justify-center gap-6 text-xl mt-6">
+        <a href="https://github.com/sirish1887" class="hover:text-yellow-400 transition duration-300"><i class="fab fa-github"></i></a>
+        <button id="whatsappBtn" class="hover:text-green-400 transition duration-300"><i class="fab fa-whatsapp"></i></button>
+        <a href="https://www.instagram.com/shirish_jha1" class="hover:text-pink-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp QR Code Modal -->
+  <div id="whatsappModal" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 hidden">
+    <div class="bg-black/80 p-6 rounded-2xl flex flex-col items-center relative">
+      <button id="closeModal" class="absolute top-2 right-2 text-white text-xl">&times;</button>
+      <h3 class="text-white text-2xl mb-4">Scan WhatsApp QR</h3>
+      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48">
+      <p class="text-gray-300 mt-4 text-sm">Scan this QR code with WhatsApp to chat with me.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center py-6 text-gray-400 text-sm bg-black/60">
+© 2026 Shirish Jha • Kathmandu, Nepal
+</footer>
+
+<button id="topBtn" class="btn p-3 rounded-full text-white">↑</button>
+
+<!-- Scripts -->
+<script>
+/* LOADER */
+window.addEventListener("load",()=>{ setTimeout(()=>{ document.getElementById("loader").style.display="none"; },1200); });
+
+/* CUSTOM CURSOR */
+const cursor=document.getElementById("cursor");
+document.addEventListener("mousemove",(e)=>{ cursor.style.left=e.clientX+"px"; cursor.style.top=e.clientY+"px"; });
+
+/* 3D CARD EFFECT */
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mousemove",(e)=>{
+    const rect=card.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const centerX=rect.width/2;
+    const centerY=rect.height/2;
+    const rotateX=(y-centerY)/10;
+    const rotateY=(centerX-x)/10;
+    card.querySelector(".card-inner").style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+  });
+  card.addEventListener("mouseleave",()=>{ card.querySelector(".card-inner").style.transform="rotateX(0) rotateY(0) scale(1)"; });
+});
+
+/* FADE ANIMATION */
+const faders=document.querySelectorAll('.fade');
+const observer=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting)e.target.classList.add('show'); }); });
+faders.forEach(f=>observer.observe(f));
+
+/* MOBILE MENU */
+const menuBtn=document.getElementById("menuBtn");
+const mobileMenu=document.getElementById("mobileMenu");
+menuBtn.onclick=()=>{ mobileMenu.classList.toggle("hidden"); };
+
+/* SCROLL BUTTON */
+const topBtn=document.getElementById("topBtn");
+window.onscroll=()=>{ if(window.scrollY>500) topBtn.style.display="block"; else topBtn.style.display="none"; };
+topBtn.onclick=()=>{ window.scrollTo({top:0,behavior:"smooth"}); };
+
+/* TYPING */
+const words=["Web Designer","Freelancer","Frontend Developer"];
+let i=0,j=0,current="",deleting=false;
+const el=document.getElementById("typing");
+function type(){
+  if(!deleting){
+    current=words[i].slice(0,++j);
+    if(j===words[i].length) deleting=true;
+  } else {
+    current=words[i].slice(0,--j);
+    if(j===0){ deleting=false; i=(i+1)%words.length; }
+  }
+  el.textContent=current;
+  setTimeout(type,deleting?60:100);
+}
+type();
+
+/* PARTICLES */
+const canvas=document.getElementById("heroParticles");
+const ctx=canvas.getContext("2d");
+function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+resizeCanvas(); window.addEventListener("resize",resizeCanvas);
+
+let particles=[]; const PARTICLE_COUNT=100;
+for(let i=0;i<PARTICLE_COUNT;i++){ particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5),dy:(Math.random()-0.5)}); }
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(236,72,153,0.7)";
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// 3D Tilt for Contact Card
+const contactCard = document.querySelector('#contact .card');
+if(contactCard){
+  const inner = contactCard.querySelector('.card-inner');
+  contactCard.addEventListener('mousemove', e => {
+    const rect = contactCard.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (y - centerY) / 15;
+    const rotateY = (centerX - x) / 15;
+    inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  contactCard.addEventListener('mouseleave', () => {
+    inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+  });
+}
+
+const whatsappBtn = document.getElementById('whatsappBtn');
+const whatsappModal = document.getElementById('whatsappModal');
+const closeModal = document.getElementById('closeModal');
+
+// Show QR code modal
+whatsappBtn.addEventListener('click', () => {
+  whatsappModal.classList.add('show');
+});
+
+// Close modal
+closeModal.addEventListener('click', () => {
+  whatsappModal.classList.remove('show');
+});
+
+// Close modal when clicking outside modal content
+whatsappModal.addEventListener('click', (e) => {
+  if(e.target === whatsappModal) whatsappModal.classList.remove('show');
+});
+
+const heroWhatsappBtn = document.getElementById('heroWhatsappBtn');
+const heroWhatsappModal = document.getElementById('heroWhatsappModal');
+const closeHeroModal = document.getElementById('closeHeroModal');
+
+// Show QR code modal
+heroWhatsappBtn.addEventListener('click', () => {
+  heroWhatsappModal.classList.add('show');
+});
+
+// Close modal
+closeHeroModal.addEventListener('click', () => {
+  heroWhatsappModal.classList.remove('show');
+});
+
+// Close modal when clicking outside modal content
+heroWhatsappModal.addEventListener('click', (e) => {
+  if(e.target === heroWhatsappModal) heroWhatsappModal.classList.remove('show');
+});
+</script>
+
+</body>
+</html>
