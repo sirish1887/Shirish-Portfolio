@@ -1,614 +1,1232 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shirish Jha | Web Designer</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shirish Jha | Futuristic Web Designer</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
-body {
+:root{
+  --bg:#02050a;
+  --bg-soft:#07111b;
+  --panel:rgba(7,17,27,0.82);
+  --panel-strong:rgba(5,12,20,0.92);
+  --line:rgba(96,165,250,0.14);
+  --text:#e8f3ff;
+  --muted:#8ea7c4;
+  --blue:#2563eb;
+  --blue2:#60a5fa;
+  --cyan:#38bdf8;
+  --cyan-soft:rgba(56,189,248,0.3);
+  --card-bg:linear-gradient(180deg, rgba(10,18,30,0.84), rgba(4,9,16,0.78));
+  --nav-bg:rgba(2,7,13,0.72);
+  --footer-bg:rgba(1,4,8,0.8);
+}
+
+body.light-mode{
+  --bg:#e9f4ff;
+  --bg-soft:#d9ebff;
+  --panel:rgba(255,255,255,0.72);
+  --panel-strong:rgba(245,250,255,0.92);
+  --line:rgba(37,99,235,0.14);
+  --text:#08111d;
+  --muted:#44607f;
+  --blue:#1d4ed8;
+  --blue2:#3b82f6;
+  --cyan:#0284c7;
+  --cyan-soft:rgba(2,132,199,0.2);
+  --card-bg:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(232,244,255,0.86));
+  --nav-bg:rgba(240,248,255,0.82);
+  --footer-bg:rgba(228,241,255,0.88);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
   font-family:'Outfit',sans-serif;
-  color:#e5e7eb;
-  background:linear-gradient(-45deg,#0f0c29,#1b1536,#2d1b69,#0f172a);
-  background-size:400% 400%;
-  animation:gradientMove 15s ease infinite;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(37,99,235,0.16), transparent 25%),
+    radial-gradient(circle at 85% 10%, rgba(56,189,248,0.12), transparent 25%),
+    linear-gradient(135deg, var(--bg), #05101a 45%, #02060b 100%);
   overflow-x:hidden;
   cursor:none;
+  transition:background .35s ease,color .35s ease;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:42px 42px;
+  opacity:.35;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  z-index:-2;
 }
 
-/* LED Gradient Background Animation */
-@keyframes gradientMove{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-/* LOADER */
 #loader{
   position:fixed;
   inset:0;
-  background:black;
+  background:radial-gradient(circle, #07111d, #010203 70%);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
-  /* subtle glow only */
-  text-shadow:0 0 5px #ff3c3c,0 0 5px #4f7cff,0 0 5px #ffe600;
+}
+.loader-text{
+  font-family:'Orbitron',sans-serif;
+  letter-spacing:.2em;
+  color:#dbeafe;
+  position:relative;
+  text-transform:uppercase;
+}
+.loader-text::after{
+  content:"";
+  position:absolute;
+  left:-15%;
+  right:-15%;
+  bottom:-12px;
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation:scanLine 1.8s linear infinite;
 }
 
-/* CUSTOM CURSOR */
 .custom-cursor{
   position:fixed;
   width:18px;
   height:18px;
   border-radius:50%;
-  background:#ec4899;
+  border:2px solid var(--cyan);
+  background:rgba(56,189,248,0.1);
+  box-shadow:0 0 12px rgba(56,189,248,0.35), 0 0 24px rgba(37,99,235,0.18);
   pointer-events:none;
-  z-index:9999;
   transform:translate(-50%,-50%);
-  box-shadow:0 0 15px #ec4899,0 0 30px #ec4899,0 0 50px #ff77aa;
-  transition: transform 0.1s ease;
+  z-index:9999;
+}
+.custom-cursor::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:50%;
+  background:var(--blue2);
 }
 
-/* GLASS */
-.glass{
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:1rem;
-  box-shadow: 0 0 20px rgba(255,255,255,0.1), 0 0 40px rgba(236,72,153,0.2);
+.nav-shell{
+  background:var(--nav-bg);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 10px 35px rgba(0,0,0,0.24);
+  transition:.35s ease;
 }
-
-/* 3D CARD */
-.card{
-  perspective:1200px;
-  transition:.4s;
+.brand-text,.section-title,.hero-title,.robot-ui-title,.theme-label{
+  font-family:'Orbitron',sans-serif;
 }
-.card-inner{
-  transition:transform .4s;
-  transform-style:preserve-3d;
+.brand-text{
+  letter-spacing:.08em;
 }
-
-/* PROFILE FLOAT */
-.profile3d{
-  animation:float3d 5s ease-in-out infinite;
-}
-@keyframes float3d{
-  0%{transform:translateY(0px)}
-  50%{transform:translateY(-15px)}
-  100%{transform:translateY(0px)}
-}
-
-/* GRADIENT TEXT - toned down glow */
-.gradient-text{
-  background:linear-gradient(90deg,#ff3c3c,#4f7cff,#ffe600,#ff3c3c);
-  background-size:300%;
-  background-clip:text;
-  -webkit-background-clip:text;
-  color:transparent;
-  animation:textMove 6s linear infinite;
-  text-shadow: 0 0 2px rgba(255,255,255,0.2); /* very subtle shadow */
-}
-@keyframes textMove{
-  0%{background-position:0%}
-  100%{background-position:300%}
-}
-
-/* BUTTON LED - subtle shadow */
-.btn{
-  background:linear-gradient(90deg,#a855f7,#ec4899);
+.nav-link{
+  color:var(--text);
   transition:.3s;
-  box-shadow:0 0 5px #a855f7,0 0 10px #ec4899,0 0 15px #ff77aa;
+  position:relative;
+}
+.nav-link:hover{
+  color:var(--cyan);
+}
+.nav-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--blue2),var(--cyan));
+  transition:.3s;
+}
+.nav-link:hover::after{
+  width:100%;
+}
+.mobile-menu{
+  background:var(--panel-strong);
+  border-top:1px solid var(--line);
+}
+.mobile-link{
+  color:var(--text);
+  padding:.85rem 1rem;
+  border-radius:14px;
+  border:1px solid transparent;
+  transition:.3s;
+}
+.mobile-link:hover{
+  color:var(--cyan);
+  border-color:rgba(56,189,248,0.18);
+  background:rgba(56,189,248,0.05);
+}
+
+.theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+}
+.theme-label{
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.theme-btn{
+  width:74px;
+  height:36px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.08);
+  position:relative;
+  transition:.3s;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  color:var(--text);
+}
+.theme-btn i{
+  font-size:12px;
+  z-index:1;
+  pointer-events:none;
+}
+.theme-btn .fa-moon{
+  color:#cbd5e1;
+}
+.theme-btn .fa-sun{
+  color:#facc15;
+}
+.theme-btn::after{
+  content:"";
+  position:absolute;
+  top:4px;
+  left:5px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:linear-gradient(180deg,var(--blue2),var(--cyan));
+  box-shadow:0 0 10px rgba(56,189,248,0.35);
+  transition:.3s;
+}
+body.light-mode .theme-btn::after{
+  transform:translateX(37px);
+}
+
+.glass{
+  background:var(--card-bg);
+  border:1px solid var(--line);
+  backdrop-filter:blur(16px);
+  box-shadow:0 12px 35px rgba(0,0,0,0.18), 0 0 22px rgba(37,99,235,0.08);
+  transition:.35s ease;
+}
+
+.hero-shell{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+#heroParticles{
+  position:absolute;
+  inset:0;
+  z-index:-3;
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at center, rgba(37,99,235,0.12), transparent 26%),
+    repeating-linear-gradient(to bottom, rgba(56,189,248,0.04) 0, rgba(56,189,248,0.04) 1px, transparent 1px, transparent 16px);
+  animation:hudFloat 8s ease-in-out infinite;
+  z-index:-2;
+}
+.hero-grid-glow{
+  position:absolute;
+  inset:auto 50% 12%;
+  width:520px;
+  height:520px;
+  transform:translateX(-50%);
+  border-radius:50%;
+  border:1px solid var(--line);
+  box-shadow:0 0 80px rgba(37,99,235,0.15), inset 0 0 30px rgba(56,189,248,0.08);
+  animation:spin 18s linear infinite;
+}
+
+.hero-kicker,.section-label{
+  color:var(--cyan);
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:.82rem;
+  font-family:'Orbitron',sans-serif;
+}
+.hero-title{
+  font-size:clamp(2.6rem,6vw,4.9rem);
+  line-height:1.06;
+  letter-spacing:.04em;
+}
+.gradient-text{
+  background:linear-gradient(90deg, #eff6ff, var(--blue2), var(--cyan), #eff6ff);
+  background-size:220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:textShift 6s linear infinite;
+}
+body.light-mode .gradient-text{
+  background:linear-gradient(90deg, #0f172a, var(--blue), var(--cyan), #0f172a);
+  background-size:220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero-sub{
+  color:var(--muted);
+  max-width:760px;
+}
+.cursor{
+  border-right:2px solid var(--cyan);
+  animation:blink 1s infinite;
+  padding-right:2px;
+}
+
+.hero-stack{
+  display:grid;
+  grid-template-columns:1.2fr .9fr;
+  gap:2rem;
+  align-items:center;
+}
+.hero-left{
+  text-align:left;
+}
+.hero-actions{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+.hero-social a,
+.hero-social button,
+.contact-social a,
+.contact-social button{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  transition:.3s;
+}
+.hero-social a:hover,
+.hero-social button:hover,
+.contact-social a:hover,
+.contact-social button:hover{
+  color:var(--cyan);
+  transform:translateY(-4px);
+  box-shadow:0 0 18px rgba(56,189,248,0.18);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.65rem;
+  color:white;
+  padding:.85rem 1.5rem;
+  border-radius:999px;
+  border:1px solid rgba(125,211,252,0.2);
+  background:linear-gradient(90deg, #0d3b8d, #0ea5e9);
+  box-shadow:0 0 14px rgba(37,99,235,0.18);
+  transition:.3s;
 }
 .btn:hover{
-  transform:translateY(-5px) scale(1.05);
-  box-shadow:0 0 8px #a855f7,0 0 15px #ec4899,0 0 25px #ff77aa;
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 0 24px rgba(56,189,248,0.22);
+}
+.btn-secondary{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--line);
 }
 
-/* SECTION ANIMATION */
+.robot-ui{
+  position:relative;
+  min-height:430px;
+  display:grid;
+  place-items:center;
+}
+.robot-panel{
+  position:relative;
+  width:min(360px, 100%);
+  aspect-ratio:1/1;
+  border-radius:34px;
+  background:linear-gradient(180deg, rgba(7,17,27,0.95), rgba(2,7,13,0.95));
+  border:1px solid var(--line);
+  box-shadow:0 0 40px rgba(37,99,235,0.1), inset 0 0 40px rgba(56,189,248,0.05);
+  overflow:hidden;
+}
+.robot-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(56,189,248,0.08) 50%, transparent 52%),
+    linear-gradient(transparent 48%, rgba(56,189,248,0.08) 50%, transparent 52%);
+  opacity:.4;
+}
+.robot-panel::after{
+  content:"";
+  position:absolute;
+  inset:auto -10% 18%;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(125,211,252,0.95), transparent);
+  animation:scanLine 2.8s linear infinite;
+}
+.robot-ui-title{
+  position:absolute;
+  top:18px;
+  left:22px;
+  font-size:.8rem;
+  color:#cde6ff;
+  letter-spacing:.18em;
+}
+
+.robot-svg{
+  width:82%;
+  height:auto;
+  filter:drop-shadow(0 0 16px rgba(56,189,248,0.2));
+  animation:floatBot 4.5s ease-in-out infinite;
+}
+.robot-head,
+.robot-ear,
+.robot-neck,
+.robot-chest,
+.robot-arm,
+.robot-hand,
+.robot-core,
+.robot-eye{
+  stroke:#66c8ff;
+  stroke-width:4;
+  fill:rgba(7,17,27,0.8);
+}
+.robot-eye{
+  fill:#7dd3fc;
+  stroke:none;
+  animation:eyePulse 1.6s infinite;
+}
+.robot-core{
+  fill:rgba(37,99,235,0.34);
+  animation:corePulse 2.4s ease-in-out infinite;
+}
+.robot-line{
+  stroke:rgba(125,211,252,0.55);
+  stroke-width:2;
+  stroke-dasharray:8 10;
+  animation:dashMove 10s linear infinite;
+}
+.orbit-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px dashed var(--line);
+}
+.orbit-one{
+  width:420px;height:420px;
+  animation:spin 15s linear infinite;
+}
+.orbit-two{
+  width:290px;height:290px;
+  animation:spinReverse 10s linear infinite;
+}
+.orbit-dot{
+  position:absolute;
+  width:12px;height:12px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 16px rgba(56,189,248,0.55);
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
 .fade{
   opacity:0;
-  transform:translateY(60px);
-  transition:1s;
+  transform:translateY(50px);
+  transition:1s ease;
 }
 .fade.show{
   opacity:1;
   transform:translateY(0);
 }
 
-.cursor{
-  border-right:2px solid #ff2d95;
-  animation:blink 1s infinite;
-}
-@keyframes blink{
-  50%{border-color:transparent}
-}
-
-/* TOP BUTTON LED */
-#topBtn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  display:none;
-  z-index:50;
-  box-shadow:0 0 5px #ec4899,0 0 10px #ff3c3c,0 0 15px #ff77aa;
+.info-icon{
+  width:70px;
+  height:70px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 1rem;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(37,99,235,0.18), rgba(2,7,13,0.25));
+  border:1px solid var(--line);
 }
 
-/* PARTICLE CANVAS */
-#heroParticles{
+.skill-block,
+.stat-card,
+.service-card,
+.timeline-card{
+  padding:1rem 1.15rem;
+  border-radius:18px;
+  background:var(--panel);
+  border:1px solid var(--line);
+}
+.skill-meta{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:.65rem;
+}
+.skill-bar{
+  position:relative;
+  height:12px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.06);
+}
+.skill-fill{
+  position:relative;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg, #2563eb, #38bdf8);
+  box-shadow:0 0 14px rgba(56,189,248,0.22);
+}
+.skill-fill::after{
+  content:"";
   position:absolute;
   top:0;
-  left:0;
+  left:-28%;
+  width:28%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+  animation:scanFill 2s linear infinite;
+}
+
+.services-grid,
+.stats-grid,
+.timeline-grid{
+  display:grid;
+  gap:1.5rem;
+}
+.services-grid{
+  grid-template-columns:repeat(3,1fr);
+}
+.stats-grid{
+  grid-template-columns:repeat(3,1fr);
+}
+.timeline-grid{
+  grid-template-columns:repeat(3,1fr);
+}
+.service-card{
+  transition:.3s ease;
+}
+.service-card:hover,
+.stat-card:hover,
+.timeline-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 0 24px rgba(56,189,248,0.12);
+}
+.service-card i{
+  font-size:1.8rem;
+  color:var(--cyan);
+  margin-bottom:1rem;
+}
+.stat-number{
+  font-family:'Orbitron',sans-serif;
+  font-size:2rem;
+  color:var(--cyan);
+}
+.stat-label{
+  color:var(--muted);
+  margin-top:.35rem;
+}
+.timeline-year{
+  font-family:'Orbitron',sans-serif;
+  color:var(--cyan);
+  font-size:.9rem;
+  margin-bottom:.6rem;
+}
+
+.project-card{
+  position:relative;
+  overflow:hidden;
+}
+.project-thumb{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+}
+.project-thumb img{
+  transition:transform .5s ease, filter .5s ease;
+  border:1px solid var(--line);
+}
+.project-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(2,7,13,0.92), rgba(2,7,13,0.08));
+  display:flex;
+  align-items:flex-end;
+  padding:1rem;
+  opacity:0;
+  transition:.35s ease;
+}
+.project-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:.45rem;
+  padding:.45rem .8rem;
+  border-radius:999px;
+  background:rgba(56,189,248,0.1);
+  border:1px solid rgba(56,189,248,0.16);
+  color:#dbeafe;
+  font-size:.78rem;
+  font-family:'Orbitron',sans-serif;
+}
+.project-card:hover .project-thumb img{
+  transform:scale(1.08);
+  filter:saturate(1.1);
+}
+.project-card:hover .project-overlay{
+  opacity:1;
+}
+
+.contact-bg{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
-  z-index:-10;
+  object-fit:cover;
+  opacity:.15;
+  filter:grayscale(30%) hue-rotate(180deg);
+}
+.contact-card{
+  position:relative;
+  overflow:hidden;
+}
+.contact-card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:24px;
+  padding:1px;
+  background:linear-gradient(135deg, rgba(96,165,250,0.7), transparent, rgba(56,189,248,0.5));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+.modal{display:none}
+.modal.show{display:flex}
+.modal-card{
+  background:linear-gradient(180deg, rgba(6,12,20,0.95), rgba(3,8,14,0.98));
+  border:1px solid var(--line);
+  box-shadow:0 0 30px rgba(0,0,0,0.35);
 }
 
-/* LED SKILL BARS */
-.skill-bar {
-  position: relative;
-  width: 100%;
-  height: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+#topBtn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  display:none;
+  z-index:50;
 }
-.skill-fill {
-  height: 100%;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  animation: glowPulse 2s infinite alternate;
-}
-.skill-fill::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, #9d3cff, #4f7cff, #ffe600);
-  filter: blur(6px);
-  opacity: 0.5; /* reduced opacity */
-  animation: scan 2s linear infinite;
-}
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 5px, 0 0 10px; }
-  50% { box-shadow: 0 0 8px, 0 0 15px; }
-  100% { box-shadow: 0 0 5px, 0 0 10px; }
-}
-@keyframes scan {
-  0% { left: -50%; }
-  100% { left: 100%; }
+footer{
+  background:var(--footer-bg);
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  transition:.35s ease;
 }
 
-/* Contact Card 3D Floating & Neon Glow */
-#contact .card {
-  perspective: 1200px;
-  position: relative;
-  border-radius: 2rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 15px rgba(236,72,153,0.2), 0 0 30px rgba(255,119,170,0.2);
-  overflow: hidden;
-  animation: floatCard 6s ease-in-out infinite;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+@keyframes blink{50%{border-color:transparent}}
+@keyframes textShift{0%{background-position:0%}100%{background-position:220%}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spinReverse{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes hudFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes scanLine{0%{transform:translateX(-20%)}100%{transform:translateX(20%)}}
+@keyframes scanFill{0%{left:-28%}100%{left:100%}}
+@keyframes floatBot{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes eyePulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes corePulse{0%,100%{opacity:.65}50%{opacity:1}}
+@keyframes dashMove{from{stroke-dashoffset:0}to{stroke-dashoffset:180}}
 
-/* Inner card for 3D effect */
-#contact .card-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-}
-
-/* Neon gradient border */
-#contact .card::before {
-  content: '';
-  position: absolute;
-  top: -4px; left: -4px; right: -4px; bottom: -4px;
-  border-radius: 2rem;
-  background: linear-gradient(90deg, #ff3c3c, #4f7cff);
-  z-index: -1;
-  filter: blur(15px);
-  opacity: 0.6;
-  animation: neonPulse 2.5s ease-in-out infinite alternate;
-}
-
-/* Floating keyframes */
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Neon pulse keyframes */
-@keyframes neonPulse {
-  0% { opacity: 0.4; }
-  50% { opacity: 0.7; }
-  100% { opacity: 0.4; }
-}
-
-/* Optional subtle hover scale */
-#contact .card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(236,72,153,0.3), 0 0 40px rgba(255,119,170,0.3);
-}
-
-/* Background image styling */
-#contact .absolute img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.3; /* darken image */
-  filter: blur(2px); /* slight blur */
-  z-index: 0;
-}
-
-/* Ensure card is above the background */
-#contact .card {
-  position: relative;
-  z-index: 10;
-}
-
-/* Modal hidden by default */
-#whatsappModal {
-  display: none;
-}
-
-/* Show modal when active */
-#whatsappModal.show {
-  display: flex;
-}
-
-/* Hero WhatsApp Modal hidden by default */
-#heroWhatsappModal {
-  display: none;
-}
-
-/* Show modal when active */
-#heroWhatsappModal.show {
-  display: flex;
+@media (max-width: 900px){
+  body{cursor:auto}
+  .custom-cursor{display:none}
+  .hero-stack{grid-template-columns:1fr}
+  .hero-left{text-align:center}
+  .hero-actions,.hero-social{justify-content:center}
+  .robot-ui{min-height:360px}
+  .orbit-one{width:320px;height:320px}
+  .orbit-two{width:220px;height:220px}
+  .services-grid,
+  .stats-grid,
+  .timeline-grid{
+    grid-template-columns:1fr;
+  }
+  .theme-label{
+    display:none;
+  }
 }
 </style>
 </head>
 
 <body>
-
 <div id="loader">
-  <h1 class="text-3xl gradient-text">Loading Portfolio...</h1>
+  <div class="loader-text">System Booting</div>
 </div>
 
 <div class="custom-cursor" id="cursor"></div>
 
-<!-- NAVBAR -->
-<nav class="fixed w-full bg-black/30 backdrop-blur-md border-b border-white/10 z-50">
-  <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-    <h1 class="text-2xl font-bold gradient-text">Sirish Portfolio</h1>
-    <div class="space-x-8 hidden md:flex">
-      <a href="#about" class="text-white hover:text-pink-400 transition duration-300">About</a>
-      <a href="#skills" class="text-white hover:text-pink-400 transition duration-300">Skills</a>
-      <a href="#projects" class="text-white hover:text-pink-400 transition duration-300">Projects</a>
-      <a href="#contact" class="text-white hover:text-pink-400 transition duration-300">Contact</a>
+<nav class="fixed w-full nav-shell backdrop-blur-md z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4 gap-4">
+    <h1 class="text-xl md:text-2xl font-bold brand-text">SIRISH.PORTFOLIO</h1>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#journey" class="nav-link">Journey</a>
+      <a href="#contact" class="nav-link">Contact</a>
     </div>
-    <button id="menuBtn" class="md:hidden text-2xl text-white"><i class="fas fa-bars"></i></button>
+
+    <div class="flex items-center gap-3">
+      <div class="theme-toggle">
+        <span class="theme-label">Theme</span>
+        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+      <button id="menuBtn" class="md:hidden text-2xl text-[var(--text)]"><i class="fas fa-bars"></i></button>
+    </div>
   </div>
-  <div id="mobileMenu" class="hidden flex flex-col text-center pb-4 space-y-3 md:hidden">
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
+
+  <div id="mobileMenu" class="mobile-menu hidden md:hidden px-4 pb-4">
+    <div class="flex flex-col gap-3">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#services" class="mobile-link">Services</a>
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#journey" class="mobile-link">Journey</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </div>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="h-screen flex items-center justify-center text-center px-6 relative fade">
+<section class="hero-shell flex items-center justify-center px-6 relative fade">
   <canvas id="heroParticles"></canvas>
-  <div>
-    <img src="image1.jpeg" class="profile3d w-36 h-36 mx-auto rounded-full border-4 border-pink-500 mb-6">
-    <h2 class="text-5xl font-bold gradient-text mb-4">Hi, I'm Shirish Jha</h2>
-    <p class="text-xl text-pink-400 mb-6"><span id="typing" class="cursor"></span></p>
-    <p class="text-gray-400 max-w-xl mx-auto mb-8">
-      Creative Web Designer from Kathmandu building modern, responsive and aesthetic websites.
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-glow"></div>
+
+  <div class="max-w-6xl w-full pt-24">
+    <div class="hero-stack">
+      <div class="hero-left">
+        <p class="hero-kicker mb-4">Blue Core Interface</p>
+        <h2 class="hero-title gradient-text mb-4">Hi, I'm Shirish Jha</h2>
+        <p class="text-xl md:text-2xl text-sky-300 mb-5">
+          <span id="typing" class="cursor"></span>
+        </p>
+        <p class="hero-sub text-base md:text-lg mb-8">
+          Creative web designer from Kathmandu building modern, responsive and futuristic websites with sleek visuals, strong structure and robotics-inspired motion.
+        </p>
+
+        <div class="hero-actions mb-8">
+          <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn">View My Work</a>
+          <a href="#services" class="btn btn-secondary">My Services</a>
+        </div>
+
+        <div class="hero-social flex gap-4 text-xl">
+          <a href="https://github.com/sirish1887" target="_blank"><i class="fab fa-github"></i></a>
+          <button id="heroWhatsappBtn"><i class="fab fa-whatsapp"></i></button>
+          <a href="https://www.instagram.com/shirish_jha1" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="robot-ui">
+        <div class="orbit-ring orbit-one"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring orbit-two"><div class="orbit-dot"></div></div>
+
+        <div class="robot-panel">
+          <div class="robot-ui-title">ROBOTIC UI MODE</div>
+
+          <svg viewBox="0 0 300 300" class="robot-svg" aria-label="robot illustration">
+            <line x1="60" y1="62" x2="240" y2="62" class="robot-line"/>
+            <line x1="150" y1="20" x2="150" y2="44" class="robot-line"/>
+            <rect x="88" y="46" width="124" height="92" rx="24" class="robot-head"/>
+            <rect x="116" y="26" width="68" height="18" rx="9" class="robot-neck"/>
+            <rect x="72" y="78" width="20" height="34" rx="10" class="robot-ear"/>
+            <rect x="208" y="78" width="20" height="34" rx="10" class="robot-ear"/>
+            <circle cx="124" cy="91" r="12" class="robot-eye"/>
+            <circle cx="176" cy="91" r="12" class="robot-eye"/>
+            <rect x="118" y="116" width="64" height="8" rx="4" fill="rgba(125,211,252,0.75)"/>
+            <rect x="110" y="150" width="80" height="22" rx="10" class="robot-neck"/>
+            <rect x="82" y="174" width="136" height="78" rx="24" class="robot-chest"/>
+            <circle cx="150" cy="212" r="18" class="robot-core"/>
+            <rect x="40" y="184" width="38" height="16" rx="8" class="robot-arm"/>
+            <rect x="222" y="184" width="38" height="16" rx="8" class="robot-arm"/>
+            <rect x="28" y="197" width="34" height="12" rx="6" class="robot-hand"/>
+            <rect x="238" y="197" width="34" height="12" rx="6" class="robot-hand"/>
+            <line x1="82" y1="194" x2="60" y2="194" class="robot-line"/>
+            <line x1="218" y1="194" x2="240" y2="194" class="robot-line"/>
+            <line x1="150" y1="230" x2="150" y2="262" class="robot-line"/>
+            <line x1="126" y1="246" x2="174" y2="246" class="robot-line"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="heroWhatsappModal" class="modal fixed inset-0 bg-black/80 justify-center items-center z-50">
+    <div class="modal-card p-6 rounded-3xl flex flex-col items-center relative">
+      <button id="closeHeroModal" class="absolute top-2 right-3 text-white text-2xl">&times;</button>
+      <h3 class="text-white text-2xl mb-4 brand-text">Scan WhatsApp QR</h3>
+      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48 rounded-xl border border-sky-400/20">
+      <p class="text-slate-300 mt-4 text-sm text-center">Scan this QR code with WhatsApp to chat with me.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-24 fade flex justify-center px-6">
+  <div class="glass max-w-5xl p-10 rounded-3xl text-center space-y-6">
+    <p class="section-label">About</p>
+    <h2 class="section-title gradient-text">Designing Smart Digital Experiences</h2>
+    <p class="text-lg max-w-3xl mx-auto" style="color:var(--muted);">
+      I'm <span class="text-sky-300 font-semibold">Shirish Jha</span>, a freelance web designer and frontend developer based in Kathmandu, Nepal. I create bold interfaces, responsive websites and polished UI systems that feel modern, clean and futuristic.
     </p>
-    <div class="flex justify-center gap-6 text-xl mb-8">
-      <a href="https://github.com/sirish1887" class="hover:text-yellow-400 transition duration-300"><i class="fab fa-github"></i></a>
-      <button id="heroWhatsappBtn" class="hover:text-green-400 transition duration-300"><i class="fab fa-whatsapp"></i></button>
-      <a href="https://www.instagram.com/shirish_jha1" class="hover:text-pink-400 transition duration-300"><i class="fab fa-instagram"></i></a>
-    </div>
-    <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn px-8 py-3 rounded-full">View My Work</a>
-  </div>
 
-  <!-- WhatsApp QR Code Modal for Hero -->
-  <div id="heroWhatsappModal" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 hidden">
-    <div class="bg-black/80 p-6 rounded-2xl flex flex-col items-center relative">
-      <button id="closeHeroModal" class="absolute top-2 right-2 text-white text-xl">&times;</button>
-      <h3 class="text-white text-2xl mb-4">Scan WhatsApp QR</h3>
-      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48">
-      <p class="text-gray-300 mt-4 text-sm">Scan this QR code with WhatsApp to chat with me.</p>
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      <div class="glass p-6 rounded-2xl">
+        <div class="info-icon"><i class="fas fa-laptop-code text-2xl"></i></div>
+        <h3 class="font-semibold mb-2">Frontend Development</h3>
+        <p style="color:var(--muted);" class="text-sm">HTML, CSS, JavaScript and Tailwind CSS for modern websites.</p>
+      </div>
+      <div class="glass p-6 rounded-2xl">
+        <div class="info-icon"><i class="fab fa-python text-2xl"></i></div>
+        <h3 class="font-semibold mb-2">Python</h3>
+        <p style="color:var(--muted);" class="text-sm">Backend logic, automation, scripting and useful digital tools.</p>
+      </div>
+      <div class="glass p-6 rounded-2xl">
+        <div class="info-icon"><i class="fas fa-robot text-2xl"></i></div>
+        <h3 class="font-semibold mb-2">Robotic Motion Style</h3>
+        <p style="color:var(--muted);" class="text-sm">Futuristic interaction layers, HUD elements and 3D-inspired movement.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="py-24 fade flex justify-center">
-  <div class="glass max-w-4xl p-10 rounded-3xl text-center space-y-6">
-    <h2 class="text-4xl font-bold gradient-text mb-6">About Me</h2>
-    <p class="text-gray-300 text-lg">
-      I'm <span class="text-pink-400 font-semibold">Shirish Jha</span>, a freelance web designer and frontend developer based in Kathmandu, Nepal.
-      I specialize in modern UI design, responsive websites, and creating visually stunning digital experiences.
-    </p>
-    <div class="grid md:grid-cols-3 gap-6 mt-6">
-      <div class="space-y-2">
-        <i class="fas fa-laptop-code text-3xl text-pink-500" style="text-shadow:0 0 10px #ff3c3c,0 0 20px #ff77aa;"></i>
-        <h3 class="font-semibold text-white">Frontend Development</h3>
-        <p class="text-gray-400 text-sm">HTML, CSS, JavaScript & Tailwind CSS</p>
-      </div>
-      <div class="space-y-2">
-        <i class="fab fa-python text-3xl text-yellow-400" style="text-shadow:0 0 10px #ffe600,0 0 20px #ffdd55;"></i>
-        <h3 class="font-semibold text-white">Python</h3>
-        <p class="text-gray-400 text-sm">Backend, automation, scripting</p>
-      </div>
-      <div class="space-y-2">
-        <i class="fas fa-rocket text-3xl text-purple-500" style="text-shadow:0 0 10px #a855f7,0 0 20px #ec4899;"></i>
-        <h3 class="font-semibold text-white">Fast & Responsive</h3>
-        <p class="text-gray-400 text-sm">Optimized performance for all devices</p>
-      </div>
+<section id="skills" class="py-24 bg-black/10 fade px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="section-label">Core Skills</p>
+      <h2 class="section-title gradient-text">Technical Strength</h2>
     </div>
-    <a href="#projects" class="btn px-8 py-3 rounded-full mt-6 inline-block">Work With Me</a>
-  </div>
-</section>
 
-<!-- SKILLS -->
-<section id="skills" class="py-24 bg-black/30 fade">
-  <h2 class="text-4xl font-bold text-center gradient-text mb-14">Skills</h2>
-  <div class="max-w-4xl mx-auto space-y-6">
-    <div>
-      <p>HTML</p>
-      <div class="skill-bar"><div class="skill-fill" style="width:95%; background:#ff3c3c;"></div></div>
-    </div>
-    <div>
-      <p>Tailwind CSS</p>
-      <div class="skill-bar"><div class="skill-fill" style="width:90%; background:#a855f7;"></div></div>
-    </div>
-    <div>
-      <p>JavaScript</p>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%; background:#4f7cff;"></div></div>
-    </div>
-    <div>
-      <p>Python</p>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%; background:#ffe600;"></div></div>
+    <div class="grid gap-5">
+      <div class="skill-block">
+        <div class="skill-meta"><span>HTML</span><span>95%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-meta"><span>Tailwind CSS</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-meta"><span>JavaScript</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-meta"><span>Python</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects" class="py-24 fade">
-  <h2 class="text-4xl font-bold text-center gradient-text mb-14">Projects</h2>
-  <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-    <div class="glass rounded-2xl card overflow-hidden group">
-      <div class="card-inner p-6">
-        <img src="image2.png" class="w-full h-40 object-cover rounded-lg mb-4">
-        <h3 class="text-xl mb-2">Business Website</h3>
-        <p class="text-gray-400 text-sm mb-4">Modern responsive website for a startup company.</p>
-        <div class="flex justify-between">
-          <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
-          <a href="https://github.com/sirish1887/Sajilo-Luga-" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
+<section id="services" class="py-24 fade px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="section-label">Services</p>
+      <h2 class="section-title gradient-text">What I Can Do For You</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <i class="fas fa-palette"></i>
+        <h3 class="text-xl mb-2">Web Design</h3>
+        <p style="color:var(--muted);">Modern, clean and visually strong website design with better layout, colors and overall identity.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-code"></i>
+        <h3 class="text-xl mb-2">Frontend Development</h3>
+        <p style="color:var(--muted);">Responsive websites built with HTML, CSS, JavaScript and Tailwind CSS for all screen sizes.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-microchip"></i>
+        <h3 class="text-xl mb-2">Futuristic UI Animation</h3>
+        <p style="color:var(--muted);">Robotics-inspired motion, hover effects, glowing elements and immersive modern UI interactions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="journey" class="py-24 bg-black/10 fade px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="section-label">Journey</p>
+      <h2 class="section-title gradient-text">Stats And Timeline</h2>
+    </div>
+
+    <div class="stats-grid mb-10">
+      <div class="stat-card text-center">
+        <div class="stat-number" data-target="12">0</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-card text-center">
+        <div class="stat-number" data-target="8">0</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat-card text-center">
+        <div class="stat-number" data-target="3">0</div>
+        <div class="stat-label">Core Skills</div>
+      </div>
+    </div>
+
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="timeline-year">2024</div>
+        <h3 class="text-lg mb-2">Started Building Websites</h3>
+        <p style="color:var(--muted);">Focused on learning layout, responsive design, and strong visual fundamentals.</p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-year">2025</div>
+        <h3 class="text-lg mb-2">Expanded Into Frontend UI</h3>
+        <p style="color:var(--muted);">Started creating cleaner interfaces, portfolio projects and more interactive websites.</p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-year">2026</div>
+        <h3 class="text-lg mb-2">Futuristic Design Direction</h3>
+        <p style="color:var(--muted);">Building more premium portfolio experiences with robotics-style animation and motion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="py-24 fade px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="section-label">Featured Work</p>
+      <h2 class="section-title gradient-text">Projects</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="glass rounded-2xl card project-card">
+        <div class="card-inner p-6">
+          <div class="project-thumb mb-4">
+            <img src="image2.png" class="w-full h-40 object-cover" alt="Business Website">
+            <div class="project-overlay">
+              <span class="project-chip"><i class="fas fa-circle-nodes"></i> Responsive UI</span>
+            </div>
+          </div>
+          <h3 class="text-xl mb-2">Business Website</h3>
+          <p style="color:var(--muted);" class="text-sm mb-4">Modern responsive website for a startup company with clean layout and strong visual clarity.</p>
+          <div class="flex justify-between gap-3">
+            <a href="https://sirish1887.github.io/Sajilo-Luga-" class="btn px-4 py-2 text-sm flex-1">Live Demo</a>
+            <a href="https://github.com/sirish1887/Sajilo-Luga-" class="btn btn-secondary px-4 py-2 text-sm flex-1"><i class="fab fa-github"></i> GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl card project-card">
+        <div class="card-inner p-6">
+          <div class="project-thumb mb-4">
+            <img src="image4.png" class="w-full h-40 object-cover" alt="Portfolio Website">
+            <div class="project-overlay">
+              <span class="project-chip"><i class="fas fa-robot"></i> Animated Interface</span>
+            </div>
+          </div>
+          <h3 class="text-xl mb-2">Portfolio Website</h3>
+          <p style="color:var(--muted);" class="text-sm mb-4">Personal portfolio with futuristic visuals, polished transitions and immersive animation.</p>
+          <div class="flex justify-between gap-3">
+            <a href="https://sirish1887.github.io/Shirish-Portfolio/" class="btn px-4 py-2 text-sm flex-1">Live Demo</a>
+            <a href="https://github.com/sirish1887/Shirish-Portfolio" class="btn btn-secondary px-4 py-2 text-sm flex-1"><i class="fab fa-github"></i> GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl card project-card">
+        <div class="card-inner p-6">
+          <div class="project-thumb mb-4">
+            <img src="image3.png" class="w-full h-40 object-cover" alt="Landing Page">
+            <div class="project-overlay">
+              <span class="project-chip"><i class="fas fa-bolt"></i> High Conversion</span>
+            </div>
+          </div>
+          <h3 class="text-xl mb-2">Landing Page</h3>
+          <p style="color:var(--muted);" class="text-sm mb-4">A high-converting landing page for SaaS with bold layout and focused content structure.</p>
+          <div class="flex justify-between gap-3">
+            <a href="https://sirish1887.github.io/SJgames/" class="btn px-4 py-2 text-sm flex-1">Live Demo</a>
+            <a href="https://github.com/sirish1887/SJgames" class="btn btn-secondary px-4 py-2 text-sm flex-1"><i class="fab fa-github"></i> GitHub</a>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="glass rounded-2xl card overflow-hidden group">
-      <div class="card-inner p-6">
-        <img src="image4.png" class="w-full h-40 object-cover rounded-lg mb-4">
-        <h3 class="text-xl mb-2">Portfolio Website</h3>
-        <p class="text-gray-400 text-sm mb-4">Personal portfolio with animations and modern UI.</p>
-        <div class="flex justify-between">
-            <a href="https://sirish1887.github.io/Shirish-Portfolio/" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
-          <a href="https://github.com/sirish1887/Shirish-Portfolio" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
+<section id="contact" class="py-24 bg-black/10 flex justify-center items-center fade relative px-6">
+  <img src="image5.webp" alt="Contact Background" class="contact-bg">
+
+  <div class="w-full max-w-xl relative z-10">
+    <div class="card glass contact-card p-10 rounded-3xl text-center">
+      <div class="card-inner">
+        <p class="section-label mb-2">Contact</p>
+        <h2 class="section-title gradient-text mb-4">Let's Build Something Great</h2>
+        <p style="color:var(--muted);" class="mb-6">
+          Want a cleaner, stronger and more futuristic website? Let’s talk about your next project.
+        </p>
+
+        <a href="mailto:jhasirish123@gmail.com?subject=Hello%20Shirish&body=Hi%20Shirish,%0A%0AI%20would%20like%20to%20discuss%20my%20project%20with%20you." class="btn mb-4">
+          Send Email
+        </a>
+
+        <div class="contact-social flex justify-center gap-4 text-xl mt-6">
+          <a href="https://github.com/sirish1887" target="_blank"><i class="fab fa-github"></i></a>
+          <button id="whatsappBtn"><i class="fab fa-whatsapp"></i></button>
+          <a href="https://www.instagram.com/shirish_jha1" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="glass rounded-2xl card overflow-hidden group">
-      <div class="card-inner p-6">
-        <img src="image3.png" class="w-full h-40 object-cover rounded-lg mb-4">
-        <h3 class="text-xl mb-2">Landing Page</h3>
-        <p class="text-gray-400 text-sm mb-4">High-converting landing page for SaaS business.</p>
-        <div class="flex justify-between">
-          <a href="https://sirish1887.github.io/SJgames/" class="btn px-4 py-2 rounded-full text-sm">Live Demo</a>
-          <a href="https://github.com/sirish1887/SJgames" class="btn px-4 py-2 rounded-full text-sm"><i class="fab fa-github"></i> GitHub</a>
-        </div>
-      </div>
+  <div id="whatsappModal" class="modal fixed inset-0 bg-black/80 justify-center items-center z-50">
+    <div class="modal-card p-6 rounded-3xl flex flex-col items-center relative">
+      <button id="closeModal" class="absolute top-2 right-3 text-white text-2xl">&times;</button>
+      <h3 class="text-white text-2xl mb-4 brand-text">Scan WhatsApp QR</h3>
+      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48 rounded-xl border border-sky-400/20">
+      <p class="text-slate-300 mt-4 text-sm text-center">Scan this QR code with WhatsApp to chat with me.</p>
     </div>
   </div>
 </section>
 
-
-<section id="contact" class="py-24 bg-black/20 flex justify-center items-center fade relative">
-  <!-- Background image -->
-  <div class="absolute inset-0">
-    <img src="image5.webp" alt="Contact Background" class="w-full h-full object-cover opacity-30">
-  </div>
-
-  <!-- Contact Card -->
-  <div class="card glass p-10 rounded-3xl max-w-md text-center transform transition-transform duration-400 relative z-10">
-    <div class="card-inner">
-      <h2 class="text-4xl font-bold gradient-text mb-6">Contact Me</h2>
-      <p class="text-gray-300 mb-6">Let's work together on your next project. Reach out via email or social links below!</p>
-      <a href="mailto:jhasirish123@gmail.com?subject=Hello%20Shirish&body=Hi%20Shirish,%0A%0AI%20would%20like%20to%20discuss%20my%20project%20with%20you." 
-   class="btn px-8 py-3 rounded-full mb-4 inline-block">
-   Send Email
-</a>
-      <div class="flex justify-center gap-6 text-xl mt-6">
-        <a href="https://github.com/sirish1887" class="hover:text-yellow-400 transition duration-300"><i class="fab fa-github"></i></a>
-        <button id="whatsappBtn" class="hover:text-green-400 transition duration-300"><i class="fab fa-whatsapp"></i></button>
-        <a href="https://www.instagram.com/shirish_jha1" class="hover:text-pink-400 transition duration-300"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <!-- WhatsApp QR Code Modal -->
-  <div id="whatsappModal" class="fixed inset-0 bg-black/70 flex justify-center items-center z-50 hidden">
-    <div class="bg-black/80 p-6 rounded-2xl flex flex-col items-center relative">
-      <button id="closeModal" class="absolute top-2 right-2 text-white text-xl">&times;</button>
-      <h3 class="text-white text-2xl mb-4">Scan WhatsApp QR</h3>
-      <img src="QR.png" alt="WhatsApp QR Code" class="w-48 h-48">
-      <p class="text-gray-300 mt-4 text-sm">Scan this QR code with WhatsApp to chat with me.</p>
-    </div>
-  </div>
-</section>
-
-<footer class="text-center py-6 text-gray-400 text-sm bg-black/60">
-© 2026 Shirish Jha • Kathmandu, Nepal
+<footer class="text-center py-6 text-sm">
+  © 2026 Shirish Jha • Kathmandu, Nepal
 </footer>
 
-<button id="topBtn" class="btn p-3 rounded-full text-white">↑</button>
+<button id="topBtn" class="btn p-3 text-white">↑</button>
 
-<!-- Scripts -->
 <script>
-/* LOADER */
-window.addEventListener("load",()=>{ setTimeout(()=>{ document.getElementById("loader").style.display="none"; },1200); });
-
-/* CUSTOM CURSOR */
-const cursor=document.getElementById("cursor");
-document.addEventListener("mousemove",(e)=>{ cursor.style.left=e.clientX+"px"; cursor.style.top=e.clientY+"px"; });
-
-/* 3D CARD EFFECT */
-document.querySelectorAll(".card").forEach(card=>{
-  card.addEventListener("mousemove",(e)=>{
-    const rect=card.getBoundingClientRect();
-    const x=e.clientX-rect.left;
-    const y=e.clientY-rect.top;
-    const centerX=rect.width/2;
-    const centerY=rect.height/2;
-    const rotateX=(y-centerY)/10;
-    const rotateY=(centerX-x)/10;
-    card.querySelector(".card-inner").style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-  });
-  card.addEventListener("mouseleave",()=>{ card.querySelector(".card-inner").style.transform="rotateX(0) rotateY(0) scale(1)"; });
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+  }, 1000);
 });
 
-/* FADE ANIMATION */
-const faders=document.querySelectorAll('.fade');
-const observer=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting)e.target.classList.add('show'); }); });
-faders.forEach(f=>observer.observe(f));
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", (e) => {
+  if (!cursor) return;
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
 
-/* MOBILE MENU */
-const menuBtn=document.getElementById("menuBtn");
-const mobileMenu=document.getElementById("mobileMenu");
-menuBtn.onclick=()=>{ mobileMenu.classList.toggle("hidden"); };
+document.querySelectorAll(".card").forEach((card) => {
+  const inner = card.querySelector(".card-inner");
+  if (!inner) return;
 
-/* SCROLL BUTTON */
-const topBtn=document.getElementById("topBtn");
-window.onscroll=()=>{ if(window.scrollY>500) topBtn.style.display="block"; else topBtn.style.display="none"; };
-topBtn.onclick=()=>{ window.scrollTo({top:0,behavior:"smooth"}); };
-
-/* TYPING */
-const words=["Web Designer","Freelancer","Frontend Developer"];
-let i=0,j=0,current="",deleting=false;
-const el=document.getElementById("typing");
-function type(){
-  if(!deleting){
-    current=words[i].slice(0,++j);
-    if(j===words[i].length) deleting=true;
-  } else {
-    current=words[i].slice(0,--j);
-    if(j===0){ deleting=false; i=(i+1)%words.length; }
-  }
-  el.textContent=current;
-  setTimeout(type,deleting?60:100);
-}
-type();
-
-/* PARTICLES */
-const canvas=document.getElementById("heroParticles");
-const ctx=canvas.getContext("2d");
-function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-resizeCanvas(); window.addEventListener("resize",resizeCanvas);
-
-let particles=[]; const PARTICLE_COUNT=100;
-for(let i=0;i<PARTICLE_COUNT;i++){ particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5),dy:(Math.random()-0.5)}); }
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle="rgba(236,72,153,0.7)";
-    ctx.fill();
-  });
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// 3D Tilt for Contact Card
-const contactCard = document.querySelector('#contact .card');
-if(contactCard){
-  const inner = contactCard.querySelector('.card-inner');
-  contactCard.addEventListener('mousemove', e => {
-    const rect = contactCard.getBoundingClientRect();
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 15;
-    const rotateY = (centerX - x) / 15;
-    inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    const rotateX = (y - centerY) / 16;
+    const rotateY = (centerX - x) / 16;
+    inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
   });
-  contactCard.addEventListener('mouseleave', () => {
-    inner.style.transform = `rotateX(0deg) rotateY(0deg)`;
+
+  card.addEventListener("mouseleave", () => {
+    inner.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+  });
+});
+
+const faders = document.querySelectorAll(".fade");
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add("show");
+  });
+}, { threshold: 0.15 });
+faders.forEach((fader) => observer.observe(fader));
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+document.querySelectorAll("#mobileMenu a").forEach((link) => {
+  link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+});
+menuBtn.onclick = () => mobileMenu.classList.toggle("hidden");
+
+const topBtn = document.getElementById("topBtn");
+window.addEventListener("scroll", () => {
+  topBtn.style.display = window.scrollY > 500 ? "block" : "none";
+});
+topBtn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+const words = ["Web Designer", "Frontend Developer", "Creative Freelancer", "Robotic UI Builder"];
+let i = 0, j = 0, current = "", deleting = false;
+const typingEl = document.getElementById("typing");
+function type() {
+  if (!deleting) {
+    current = words[i].slice(0, ++j);
+    if (j === words[i].length) deleting = true;
+  } else {
+    current = words[i].slice(0, --j);
+    if (j === 0) {
+      deleting = false;
+      i = (i + 1) % words.length;
+    }
+  }
+  typingEl.textContent = current;
+  setTimeout(type, deleting ? 55 : 95);
+}
+type();
+
+const canvas = document.getElementById("heroParticles");
+const ctx = canvas.getContext("2d");
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const particles = [];
+const PARTICLE_COUNT = 90;
+for (let k = 0; k < PARTICLE_COUNT; k++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 1,
+    dx: (Math.random() - 0.5) * 0.75,
+    dy: (Math.random() - 0.5) * 0.75
   });
 }
 
-const whatsappBtn = document.getElementById('whatsappBtn');
-const whatsappModal = document.getElementById('whatsappModal');
-const closeModal = document.getElementById('closeModal');
+function drawConnections() {
+  for (let a = 0; a < particles.length; a++) {
+    for (let b = a + 1; b < particles.length; b++) {
+      const dx = particles[a].x - particles[b].x;
+      const dy = particles[a].y - particles[b].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.strokeStyle = `rgba(96,165,250,${0.14 - dist / 1000})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(particles[a].x, particles[a].y);
+        ctx.lineTo(particles[b].x, particles[b].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
 
-// Show QR code modal
-whatsappBtn.addEventListener('click', () => {
-  whatsappModal.classList.add('show');
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p) => {
+    p.x += p.dx;
+    p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(56,189,248,0.82)";
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = "rgba(56,189,248,0.55)";
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  });
+
+  drawConnections();
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+const whatsappBtn = document.getElementById("whatsappBtn");
+const whatsappModal = document.getElementById("whatsappModal");
+const closeModal = document.getElementById("closeModal");
+whatsappBtn.addEventListener("click", () => whatsappModal.classList.add("show"));
+closeModal.addEventListener("click", () => whatsappModal.classList.remove("show"));
+whatsappModal.addEventListener("click", (e) => {
+  if (e.target === whatsappModal) whatsappModal.classList.remove("show");
 });
 
-// Close modal
-closeModal.addEventListener('click', () => {
-  whatsappModal.classList.remove('show');
+const heroWhatsappBtn = document.getElementById("heroWhatsappBtn");
+const heroWhatsappModal = document.getElementById("heroWhatsappModal");
+const closeHeroModal = document.getElementById("closeHeroModal");
+heroWhatsappBtn.addEventListener("click", () => heroWhatsappModal.classList.add("show"));
+closeHeroModal.addEventListener("click", () => heroWhatsappModal.classList.remove("show"));
+heroWhatsappModal.addEventListener("click", (e) => {
+  if (e.target === heroWhatsappModal) heroWhatsappModal.classList.remove("show");
 });
 
-// Close modal when clicking outside modal content
-whatsappModal.addEventListener('click', (e) => {
-  if(e.target === whatsappModal) whatsappModal.classList.remove('show');
+const themeToggle = document.getElementById("themeToggle");
+const savedTheme = localStorage.getItem("portfolio-theme");
+if (savedTheme === "light") {
+  document.body.classList.add("light-mode");
+}
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+  localStorage.setItem(
+    "portfolio-theme",
+    document.body.classList.contains("light-mode") ? "light" : "dark"
+  );
 });
 
-const heroWhatsappBtn = document.getElementById('heroWhatsappBtn');
-const heroWhatsappModal = document.getElementById('heroWhatsappModal');
-const closeHeroModal = document.getElementById('closeHeroModal');
+const statNumbers = document.querySelectorAll(".stat-number");
+let statsAnimated = false;
 
-// Show QR code modal
-heroWhatsappBtn.addEventListener('click', () => {
-  heroWhatsappModal.classList.add('show');
-});
+function animateStats() {
+  if (statsAnimated) return;
+  statNumbers.forEach((stat) => {
+    const target = parseInt(stat.dataset.target, 10);
+    let count = 0;
+    const step = Math.max(1, Math.ceil(target / 40));
 
-// Close modal
-closeHeroModal.addEventListener('click', () => {
-  heroWhatsappModal.classList.remove('show');
-});
+    const counter = setInterval(() => {
+      count += step;
+      if (count >= target) {
+        stat.textContent = target + "+";
+        clearInterval(counter);
+      } else {
+        stat.textContent = count + "+";
+      }
+    }, 35);
+  });
+  statsAnimated = true;
+}
 
-// Close modal when clicking outside modal content
-heroWhatsappModal.addEventListener('click', (e) => {
-  if(e.target === heroWhatsappModal) heroWhatsappModal.classList.remove('show');
-});
+const journeySection = document.getElementById("journey");
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) animateStats();
+  });
+}, { threshold: 0.3 });
+statsObserver.observe(journeySection);
 </script>
-
 </body>
-
 </html>
-
